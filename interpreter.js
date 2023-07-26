@@ -4247,8 +4247,10 @@ Interpreter.prototype['stepObjectExpression'] = function(stack, state, node) {
 };
 
 Interpreter.prototype['stepProgram'] = function(stack, state, node) {
-  var expression = node['body'].shift();
+  var n = state.n_ || 0;
+  var expression = node['body'][n];
   if (expression) {
+    state.n_ = n + 1;
     state.done = false;
     return new Interpreter.State(expression, state.scope);
   }
